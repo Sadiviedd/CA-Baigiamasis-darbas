@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'Projects/form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <form method="post" class="my-form">
+    {% csrf_token %}
+    <div class="form-fields">
+      {{ form|crispy }}
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="submit-button">Išsaugoti</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

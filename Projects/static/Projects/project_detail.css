@@ -1,0 +1,111 @@
+.project-info-containers {
+    margin: 20px 16px 0 16px;
+    font-size: 14px;
+  }
+
+  caption {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    background-image: linear-gradient(20deg, #5F9EA0 55%, #72A0C1 100%);
+    padding: 2px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .project-invoices-expenditures-tbl {
+    width: auto;
+    height: 350px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .project-info-tbl {
+    display: flex;
+    width: auto;
+    height: 150px;
+    margin-bottom: 20px;
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .project-jobs-tbl {
+    display: flex;
+    height: 450px;
+    margin-bottom: 20px;
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+
+  .project-jobs-tbl,
+  .project-invoices-tbl,
+  .project-expenditures-tbl {
+    padding: 0px;
+  }
+
+  .project-invoices-tbl,
+  .project-expenditures-tbl {
+    flex: 1;
+    height: auto;
+    position: relative;
+    margin-bottom: 5px;
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.project-jobs-tbl::-webkit-scrollbar,
+.project-invoices-tbl::-webkit-scrollbar,
+.project-expenditures-tbl::-webkit-scrollbar {
+  width: 8px; /* Adjust the width of the scrollbar as desired */
+  border: 1px solid #ddd;
+  border-radius: 4px; /* Set the radius for rounded corners */
+  background-color: #f1f1f1; /* Set the background color of the scrollbar track */
+}
+
+.project-jobs-tbl::-webkit-scrollbar,
+.project-invoices-tbl::-webkit-scrollbar-thumb,
+.project-expenditures-tbl::-webkit-scrollbar-thumb {
+  border-radius: 4px; /* Set the radius for rounded corners */
+  background-color: #888; /* Set the color of the scrollbar thumb */
+}
+
+.project-jobs-tbl::-webkit-scrollbar,
+.project-invoices-tbl::-webkit-scrollbar-thumb:hover,
+.project-expenditures-tbl::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Set the color of the scrollbar thumb on hover */
+}
+
+.project-invoices-tbl {
+    flex-basis: 60%;
+  }
+  
+  .project-expenditures-tbl {
+    flex-basis: 40%;
+  }
+
+/* Fixed header and caption */
+.project-jobs-tbl thead,
+.project-invoices-tbl thead,
+.project-expenditures-tbl thead,
+.project-jobs-tbl caption,
+.project-invoices-tbl caption,
+.project-expenditures-tbl caption {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #fff;
+}
+
+/* Adjusted z-index for expanded table */
+.project-invoices-tbl .expanded-table {
+  z-index: 1;
+  position: relative;
+}

@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:500&display=swap">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    {% block head %}{% endblock %}
+    <title>Document</title>
+  </head>
+  <body>
+    <nav class="menu-container">
+      <!-- burger menu -->
+      <input type="checkbox" aria-label="Toggle menu" />
+      <span></span>
+      <span></span>
+      <span></span>
+
+      <!-- logo -->
+      <a href="{% url 'projects:projects-list' %}" class="menu-logo">
+        <img src="{% static 'circle.png' %}" alt="Logo" />
+      </a>
+
+      <!-- menu items -->
+      <div class="menu">
+        <ul>
+          <li>
+            <a href="{% url 'projects:projects-list' %}"> PROJEKTAI </a>
+          </li>
+          <li>
+            <a href="{% url 'projects:jobs-list' %}"> DARBŲ SĄRAŠAS </a>
+          </li>
+          <li>
+            <a href="{% url 'projects:invoices-list' %}"> SĄSKAITOS </a>
+          </li>
+          <li>
+            <a href="{% url 'projects:expenditures-list' %}"> IŠLAIDOS </a>
+          </li>
+          <li>
+            <a href="{% url 'projects:customers-list' %}"> KLIENTAI </a>
+          </li>
+          <li>
+            <a href="{% url 'projects:settings' %}"> NUSTATYMAI </a>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <a href="{%url 'logout'%}"> ATSIJUNGTI </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">{% block content %} {% endblock %}</div>
+  </body>
+</html>

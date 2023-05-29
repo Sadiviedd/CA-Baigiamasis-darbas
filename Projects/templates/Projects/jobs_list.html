@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load tz %}
+{% load humanize %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'Projects/table.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'Projects/pagination.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="btns-search-container">
+<div class="btns-search">
+  <ul>
+    <li>
+  <a href="{% url 'projects:jobs-create' %}" class="add-button">Pridėti naują darbą</a>
+</li>
+</ul>
+  <ul>
+    <li>
+  <form method="GET" action="{% url 'projects:jobs-list' %}" class="search-form">
+    <input type="text" name="search" placeholder="Ieškokite pagal projektą/atlikimą" class="search-field" value="{% if search_query %}{{ search_query }}{% endif %}">
+    <button type="submit" class="search-button">Search</button>
+  </form>
+  </li>
+  </ul>
+</div>
+</div>
+<div class="data-container">
+  <div class="table-container">
+    <table class="my-table">
+      <thead>
+        <tr>
+          <th>Projektas</th>
+          <th>Darbo pavadinimas</th>
+          <th>Pradžios data</th>
+          <th>Pabaigos data</th>
+          <th>Darbo laikas, val.</th>
+          <th>Pertrauka, val.</th>
+          <th>Grynas darbas, val.</th>
+          <th>Atliktas</th>
+          <th>Veiksmas</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+        <tr>
+          <td>
+            <a href="#" class="project-detail-menu">
+            {{ job.project_id.project_name }}
+          </a>
+          </td>
+          <td>{{ job.title }}</td>
+          <td>{{ job.start_date|date:"Y-m-d" }}</td>
+          <td>{{ job.end_date|date:"Y-m-d" }}</td>
+          <td>{{ job.work_time|default:'' }}</td>
+          <td>{{ job.break_time|default:'' }}</td>
+          <td>{{ job.neto_time|default:'' }}</td>
+          <td>
+            {% if job.isDone == 'taip' %}
+              <span class="badge success">Taip</span>
+            {% else %}
+              <span class="badge waiting">Ne</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{% url 'projects:jobs-delete' job.id %}" class="btn btn-delete">Ištrinti</a>
+            <a href="{% url 'projects:jobs-update' job.id %}" class="btn btn-edit">Redaguoti</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="pagination">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+      {% if page_obj.previous_page_number == 1 %}
+        <a href="?page=1&search={{ request.GET.search|urlencode }}">1</a>
+      {% else %}
+        <a href="?page=1&search={{ request.GET.search|urlencode }}">1</a>
+        <a href="?page={{ page_obj.previous_page_number }}&search={{ request.GET.search|urlencode }}">{{ page_obj.previous_page_number }}</a>
+      {% endif %}
+    {% endif %}
+
+    <span class="current">
+      {{ page_obj.number }}
+    </span>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}&search={{ request.GET.search|urlencode }}">{{ page_obj.next_page_number }}</a>
+    {% endif %}
+  </span>
+</div>
+{% endblock %}

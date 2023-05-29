@@ -1,0 +1,182 @@
+.table-container {
+    margin: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .my-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .my-table th,
+  .my-table td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .my-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+    text-transform: uppercase;
+  }
+  
+  .my-table tr {
+    line-height: 30px;
+  }
+
+  .my-table tr:hover {
+    background-color: #f5f5f5;
+  }
+
+  .btns-search {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .btns-search-container {
+    margin: 0px 16px 0px 16px;
+  }
+
+  .btns-search ul {
+    display: flex;
+    margin: 0px;
+    list-style: none;
+    padding-inline-start: 0px;
+  }
+
+  .btns-search li {
+    display: flex;
+    margin: 0px;
+    list-style: none;
+    padding: 0px;
+  }
+
+
+  .search-field {
+    width: 250px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .search-field:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  }
+
+  .search-button {
+    padding: 8px 16px;
+    background-color: #72A0C1;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-button:hover {
+    background-color: #5f7c90;
+  }
+  .search-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  }
+  
+  .add-button {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #5F9EA0;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-button:hover {
+    background-color: #446667;
+  }
+  
+  .add-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  }
+
+  .badge {
+    padding: 4px 14px;
+    border-radius: 4px;
+    text-align: center;
+  }
+  
+  .success {
+    background-color: #279341;
+    color: #fff;
+  }
+  
+  .partly-success {
+    background-color: #a79416;
+    color: #fff;
+  }
+
+  .waiting {
+    background-color: #6d7074;
+    color: #fff;
+  }
+  
+
+  .container {
+    font-size: 14px;
+  }
+
+  .btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .btn-add {
+    color: rgb(32, 140, 59);
+  }
+
+  .btn-delete {
+    color: red;
+  }
+  
+  .btn-edit {
+    color: blue;
+  }
+  
+  .btn:hover {
+    text-decoration: underline;
+  }
+
+  .project-detail-menu {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+  }
+
+  .project-detail-menu:hover {
+    text-decoration: underline;
+    color: #446667;
+  }
+
+  .expandable-row {
+    cursor: pointer;
+  }
+  
+  .expanded-content {
+    display: none;
+  }

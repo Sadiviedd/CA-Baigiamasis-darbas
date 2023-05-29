@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load tz %}
+{% load humanize %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'Projects/table.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'Projects/pagination.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="btns-search-container">
+<div class="btns-search">
+  <ul>
+    <li>
+  <a href="{% url 'projects:customers-create' %}" class="add-button">Pridėti naują klientą</a>
+</li>
+</ul>
+  <ul>
+    <li>
+  <form method="GET" action="{% url 'projects:customers-list' %}" class="search-form">
+    <input type="text" name="search" placeholder="Ieškokite pagal vardą/pavardę" class="search-field" value="{% if search_query %}{{ search_query }}{% endif %}">
+    <button type="submit" class="search-button">Search</button>
+  </form>
+  </li>
+  </ul>
+</div>
+</div>
+<div class="data-container">
+  <div class="table-container">
+    <table class="my-table">
+      <thead>
+        <tr>
+        <th>Vardas</th>
+        <th>Pavardė</th>
+        <th>El. paštas</th>
+        <th>Tel. nr.</th>
+        <th>Terminas (dienomis)</th>
+        <th>Veiksmas</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in customers %}
+        <tr>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.surname }}</td>
+        <td>{{ customer.email|default:'' }}</td>
+        <td>{{ customer.mobile_number|default:'' }}</td>
+        <td>{{ customer.term_days|default:'' }}</td>
+          <td>
+            <a href="{% url 'projects:customers-delete' customer.customer_id %}" class="btn btn-delete">Ištrinti</a>
+            <a href="{% url 'projects:customers-update' customer.customer_id %}" class="btn btn-edit">Redaguoti</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="pagination">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+      {% if page_obj.previous_page_number == 1 %}
+        <a href="?page=1&search={{ request.GET.search|urlencode }}">1</a>
+      {% else %}
+        <a href="?page=1&search={{ request.GET.search|urlencode }}">1</a>
+        <a href="?page={{ page_obj.previous_page_number }}&search={{ request.GET.search|urlencode }}">{{ page_obj.previous_page_number }}</a>
+      {% endif %}
+    {% endif %}
+
+    <span class="current">
+      {{ page_obj.number }}
+    </span>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}&search={{ request.GET.search|urlencode }}">{{ page_obj.next_page_number }}</a>
+    {% endif %}
+  </span>
+</div>
+{% endblock %}

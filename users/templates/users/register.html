@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:500&display=swap">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'users/style.css' %}"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="login-container">
+      <form method="post" novalidate class="card" autocomplete="off">
+        {% csrf_token %}
+        <h2 class="text-center">Sukurkite paskyrą</h2>
+        {% if messages %}
+            {% for message in messages %}
+        <h4 class="error-message">
+              {{ message }}
+        </h4>
+        {% endfor %}
+          {% endif %}
+        {% for field in form %}
+          {{ field.label_tag }} 
+          {% if field.name == 'username' %}
+            <input type="hidden" name="{{ field.html_name }}" value="{{ field.value }}">
+            <input type="{{ field.field.widget.input_type }}" value="" name="{{ field.html_name }}" {% if field.field.required %}required{% endif %}>
+          {% else %}
+            {{ field }}
+          {% endif %}
+          {% if field.errors %}
+            <small class="sm-error-message">{{ field.errors|striptags }}</small>
+          {% endif %}
+        {% endfor %}
+        
+        <input type="submit" value="Registruoti" class="btn btn-primary full-width">
+		<hr>
+		<p class="text-center">Turite paskyrą? <a href="{% url 'login'%}">Prisijunkite</a></p>
+		</form>
+	</div>
+  </body>
+</html>

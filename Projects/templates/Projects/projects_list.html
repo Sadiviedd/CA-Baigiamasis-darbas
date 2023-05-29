@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load tz %}
+{% load humanize %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'Projects/table.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'Projects/pagination.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="btns-search-container">
+<div class="btns-search">
+  <ul>
+    <li>
+  <a href="{% url 'projects:projects-create' %}" class="add-button">Pridėti naują projektą</a>
+</li>
+</ul>
+  <ul>
+    <li>
+  <form method="GET" action="{% url 'projects:projects-list' %}" class="search-form">
+    <input type="text" name="search" placeholder="Ieškokite pagal projektą/atlikimą" class="search-field" value="{% if search_query %}{{ search_query }}{% endif %}">
+    <button type="submit" class="search-button">Search</button>
+  </form>
+  </li>
+  </ul>
+</div>
+</div>
+<div class="data-container">
+  <div class="table-container">
+    <table class="my-table">
+      <thead>
+        <tr>
+        <th>Projektas</th>
+        <th>Klientas</th>
+        <th>Adresas</th>
+        <th>Tel. nr.</th>
+        <th>Miestas</th>
+        <th>El. paštas</th>
+        <th>Konstrukcija</th>
+        <th>KW</th>
+        <th>Moduliai, W</th>
+        <th>Projekto būsena</th>
+        <th>Subrangos montuotojai</th>
+        <th>EUR/KW</th>
+        <th>Komentaras</th>
+        <th>Pridėjimo data</th>
+        <th>Veiksmas</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for project in projects %}
+        <tr>
+          <td>
+            <a href="{% url 'projects:projects-detail' project.project_id %}" class="project-detail-menu">
+              {{ project.project_name }}
+          </a>
+          </td>
+          <td>
+            <a href="{% url 'projects:customers-update' project.customer_id.pk %}" class="project-detail-menu">
+              {{ project.customer_id.name }} {{ project.customer_id.surname }}
+          </a>
+          </td>
+          <td>{{ project.address|default:'' }}</td>
+        <td>{{ project.customer_id.mobile_number|default:'' }}</td>
+        <td>{{ project.city|default:'' }}</td>
+        <td>{{ project.customer_id.email|default:'' }}</td>
+        <td>{{ project.construction_id.name|default:'' }}</td>
+        <td>{{ project.kw|default:0 }}</td>
+        <td>{{ project.modules_w|default:0 }}</td>
+        <td>
+          <span class="badge {{ badge_color }}">{{ project.status_id }}</span>
+        </td>
+        <td>{{ project.subcontracting|default:'' }}</td>
+        <td>{{ project.eur_kw|default:0 }}</td>
+        <td>{{ project.comment|default:'' }}</td>
+        <td>{{ project.create_date|date:"Y-m-d" }}</td>
+          <td>
+            <a href="{% url 'projects:projects-delete' project.project_id %}" class="btn btn-delete">Ištrinti</a>
+            <a href="{% url 'projects:projects-update' project.project_id %}" class="btn btn-edit">Redaguoti</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="pagination">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+      {% if page_obj.previous_page_number == 1 %}
+        <a href="?page=1&search={{ request.GET.search|urlencode }}">1</a>
+      {% else %}
+        <a href="?page=1&search={{ request.GET.search|urlencode }}">1</a>
+        <a href="?page={{ page_obj.previous_page_number }}&search={{ request.GET.search|urlencode }}">{{ page_obj.previous_page_number }}</a>
+      {% endif %}
+    {% endif %}
+
+    <span class="current">
+      {{ page_obj.number }}
+    </span>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}&search={{ request.GET.search|urlencode }}">{{ page_obj.next_page_number }}</a>
+    {% endif %}
+  </span>
+</div>
+  {% block body %}
+    <script src="{% static 'Projects/js.js' %}"></script>
+    {% endblock %}
+{% endblock %}
