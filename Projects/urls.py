@@ -67,9 +67,4 @@ urlpatterns = [
     path('settings/project_status/create/', ProjectStatusCreateView.as_view(), name='project-status-create'),
     path('settings/project_status/update/<int:pk>/', ProjectStatusUpdateView.as_view(), name='project-status-update'),
     path('settings/project_status/delete/<int:pk>/', ProjectStatusDelete, name='project-status-delete'),
-
 ]
-
-
-# path('', invoicePayments_list, name='invoicePayments-list'),
-# path('delete/<int:pk>', invoice

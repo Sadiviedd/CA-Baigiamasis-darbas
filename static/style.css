@@ -1,4 +1,3 @@
-/* Navbar styles */
 body {
     overflow-x: hidden;
     font-family: 'Roboto', sans-serif;
@@ -11,7 +10,6 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-    /* background:	#2b6113; */
     background-image: linear-gradient(20deg, #5F9EA0 55%, #72A0C1 100%);
     color: #0a0a0a;
     padding: 15px;
@@ -52,7 +50,6 @@ body {
     z-index: 2; 
   }
   
-  /* Burger menu */
   .menu-container span {
     display: block;
     width: 33px;
@@ -102,7 +99,6 @@ body {
     font-size: 17px;
   }
   
-  /* mobile styles */
   @media only screen and (max-width: 767px) { 
     .menu-container {
       flex-direction: column;
@@ -140,7 +136,6 @@ body {
     }
   }
   
-  /* desktop styles */
   @media only screen and (min-width: 768px) { 
     .menu-container {
       width: 100%;
@@ -154,7 +149,6 @@ body {
       display: none;
     }
   
-    /* Burger menu */
     .menu-container span {
       display: none;
     }

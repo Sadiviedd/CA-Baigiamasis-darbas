@@ -64,23 +64,23 @@
 .project-jobs-tbl::-webkit-scrollbar,
 .project-invoices-tbl::-webkit-scrollbar,
 .project-expenditures-tbl::-webkit-scrollbar {
-  width: 8px; /* Adjust the width of the scrollbar as desired */
+  width: 8px;
   border: 1px solid #ddd;
-  border-radius: 4px; /* Set the radius for rounded corners */
-  background-color: #f1f1f1; /* Set the background color of the scrollbar track */
+  border-radius: 4px;
+  background-color: #f1f1f1;
 }
 
 .project-jobs-tbl::-webkit-scrollbar,
 .project-invoices-tbl::-webkit-scrollbar-thumb,
 .project-expenditures-tbl::-webkit-scrollbar-thumb {
-  border-radius: 4px; /* Set the radius for rounded corners */
-  background-color: #888; /* Set the color of the scrollbar thumb */
+  border-radius: 4px;
+  background-color: #888;
 }
 
 .project-jobs-tbl::-webkit-scrollbar,
 .project-invoices-tbl::-webkit-scrollbar-thumb:hover,
 .project-expenditures-tbl::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Set the color of the scrollbar thumb on hover */
+  background-color: #555;
 }
 
 .project-invoices-tbl {
@@ -91,7 +91,6 @@
     flex-basis: 40%;
   }
 
-/* Fixed header and caption */
 .project-jobs-tbl thead,
 .project-invoices-tbl thead,
 .project-expenditures-tbl thead,
@@ -104,7 +103,6 @@
   background-color: #fff;
 }
 
-/* Adjusted z-index for expanded table */
 .project-invoices-tbl .expanded-table {
   z-index: 1;
   position: relative;
