@@ -22,6 +22,7 @@ from django.db import IntegrityError
 from django.db.models import Q
 
 
+@login_required(login_url='/login/')
 def project_detail_view(request, pk):
     projects = Projects.objects.filter(user=request.user, project_id=pk)
     jobs = Project_jobs.objects.filter(user=request.user, project_id=pk)
@@ -44,10 +45,22 @@ class ProjectsListView(LoginRequiredMixin, ListView):
     context_object_name = 'projects'
     login_url = '/login/'
     paginate_by = 15
-    ordering = 'project_name'
+    ordering = ['project_id']
 
     def get_queryset(self):
-        return Projects.objects.filter(user=self.request.user)
+        queryset = super().get_queryset().filter(user=self.request.user)
+        search_query = self.request.GET.get('search')
+        if search_query:
+            queryset = queryset.filter(
+                Q(project_name__icontains=search_query)
+            )
+        self.request.session['filtered_project_search'] = search_query
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_query'] = self.request.session.get('filtered_project_search', '')
+        return context
 
 
 # PROJEKTO SUKURIMAS
@@ -59,7 +72,7 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user  # Pass the current user to the form
+        kwargs['user'] = self.request.user
         return kwargs
     
     def get_queryset(self):
@@ -81,7 +94,7 @@ class ProjectsUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user  # Pass the current user to the form
+        kwargs['user'] = self.request.user
         return kwargs
 
     def get_queryset(self):
@@ -114,6 +127,7 @@ class CustomersListView(LoginRequiredMixin, ListView):
     context_object_name = 'customers'
     login_url = '/login/'
     paginate_by = 15
+    ordering = ['customer_id']
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(user=self.request.user)
@@ -177,6 +191,7 @@ class ExpendituresListView(LoginRequiredMixin, ListView):
     context_object_name = 'expenditures'
     login_url = '/login/'
     paginate_by = 15
+    ordering = ['id']
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(user=self.request.user)
@@ -203,7 +218,7 @@ class ExpendituresCreateView(LoginRequiredMixin, CreateView):
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user  # Pass the current user to the form
+        kwargs['user'] = self.request.user
         return kwargs
 
     def get_queryset(self):
@@ -255,6 +270,7 @@ class JobsListView(LoginRequiredMixin, ListView):
     context_object_name = 'jobs'
     login_url = '/login/'
     paginate_by = 15
+    ordering = ['id']
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(user=self.request.user)
@@ -282,7 +298,7 @@ class JobsCreateView(LoginRequiredMixin, CreateView):
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user  # Pass the current user to the form
+        kwargs['user'] = self.request.user
         return kwargs
     
     def get_queryset(self):
@@ -363,7 +379,7 @@ class InvoicesCreateView(LoginRequiredMixin, CreateView):
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user  # Pass the current user to the form
+        kwargs['user'] = self.request.user
         return kwargs
     
     def get_queryset(self):

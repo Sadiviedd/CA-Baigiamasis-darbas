@@ -27,8 +27,7 @@ SECRET_KEY = 'django-insecure-aork$vmrrih-^_3&hl_ifr1j#fz9=7$4k3!o*4#!8g_i62xs)7
 # PROD reikia nustatyti į False
 DEBUG = True
 
-# Kai paleidžiame serveryje ir turime domain (pvz: mypage.com)
-# čia įrašome domain pavadinimą.
+
 ALLOWED_HOSTS = []
 
 

@@ -87,7 +87,6 @@ body {
     text-decoration: underline;
   }
   
-  /* Animation */
   .fade-in {
     animation: fadeIn 0.5s;
   }
@@ -101,7 +100,6 @@ body {
     }
   }
   
-  /* Responsive styles */
   @media (max-width: 576px) {
     .login-container {
       padding: 10px;

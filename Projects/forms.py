@@ -196,7 +196,6 @@ class ProjectJobsUpdateForm(forms.ModelForm):
             'end_date': 'Pabaigos data',
             'work_time': 'Darbo trukmė, val.',
             'break_time': 'Pertrauka, val.',
-            # 'isDone': 'Atliktas ',
         }
         widgets = {
             'start_date': DateInput(),
