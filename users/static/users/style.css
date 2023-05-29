@@ -1,0 +1,146 @@
+body {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f5f5f5;
+  }
+  
+  .login-container {
+    max-width: 600px;
+    width: 400px;
+    margin: 100px auto;
+    padding: 30px 40px;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  h2 {
+    font-size: 24px;
+    line-height: 2;
+    margin: 15px 0 30px 0;
+  }
+  
+  label {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  
+  input[type="text"],
+  input[type="password"],
+  input[type="email"] {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+  }
+  
+  .error-message {
+    color: red;
+    margin-bottom: 12px;
+  }
+  
+  .sm-error-message {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 8px;
+    color: red;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #5f9ea0;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .btn-primary {
+    background-color: #5f9ea0;
+  }
+  
+  .btn-primary:hover {
+    background-color: #2f5c5c;
+  }
+  
+  .forgot-password-link,
+  .join-now-link {
+    color: #337ab7;
+    text-decoration: none;
+  }
+  
+  .forgot-password-link:hover,
+  .join-now-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Animation */
+  .fade-in {
+    animation: fadeIn 0.5s;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 576px) {
+    .login-container {
+      padding: 10px;
+      width: 100%;
+    }
+  
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  
+    .btn {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .login-container {
+      width: 90%;
+      padding: 40px 20px;
+    }
+  
+    h2 {
+      font-size: 20px;
+    }
+  
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      padding: 12px;
+      font-size: 14px;
+    }
+  
+    .btn {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  }
+  

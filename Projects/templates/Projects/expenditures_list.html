@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load tz %}
+{% load humanize %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'Projects/table.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'Projects/pagination.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="btns-search-container">
+<div class="btns-search">
+  <ul>
+    <li>
+  <a href="{% url 'projects:expenditures-create' %}" class="add-button">Pridėti naujas išlaidas</a>
+</li>
+</ul>
+  <ul>
+    <li>
+  <form method="GET" action="{% url 'projects:expenditures-list' %}" class="search-form">
+    <input type="text" name="search" placeholder="Ieškokite pagal projektą" class="search-field" value="{% if search_query %}{{ search_query }}{% endif %}">
+    <button type="submit" class="search-button">Search</button>
+  </form>
+  </li>
+  </ul>
+</div>
+</div>
+<div class="data-container">
+  <div class="table-container">
+    <table class="my-table">
+      <thead>
+        <tr>
+            <th>Projektas</th>
+            <th>Pridėjimo data</th>
+            <th>Išlaidos pavadinimas</th>
+            <th>Kiekis</th>
+            <th>Kaina</th>
+            <th>Suma, eur</th>
+            <th>Veiksmas</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for expenditure in expenditures %}
+        <tr>
+          <td>
+            <a href="#" class="project-detail-menu">
+            {{ expenditure.project_id.project_name  }}
+          </a>
+          </td>
+        <td>{{ expenditure.operation_date|date:"Y-m-d" }}</td>
+        <td>{{ expenditure.name|default:'' }}</td>
+        <td>{{ expenditure.quantity|default:'' }}</td>
+        <td>{{ expenditure.price }} €</td>
+        <td>{{ expenditure.amount }} €</td>
+          <td>
+            <a href="{% url 'projects:expenditures-delete' expenditure.id %}" class="btn btn-delete">Ištrinti</a>
+            <a href="{% url 'projects:expenditures-update' expenditure.id %}" class="btn btn-edit">Redaguoti</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="pagination">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+      {% if page_obj.previous_page_number == 1 %}
+        <a href="?page=1&search={{ request.GET.search|urlencode }}">1</a>
+      {% else %}
+        <a href="?page=1&search={{ request.GET.search|urlencode }}">1</a>
+        <a href="?page={{ page_obj.previous_page_number }}&search={{ request.GET.search|urlencode }}">{{ page_obj.previous_page_number }}</a>
+      {% endif %}
+    {% endif %}
+
+    <span class="current">
+      {{ page_obj.number }}
+    </span>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}&search={{ request.GET.search|urlencode }}">{{ page_obj.next_page_number }}</a>
+    {% endif %}
+  </span>
+</div>
+{% endblock %}

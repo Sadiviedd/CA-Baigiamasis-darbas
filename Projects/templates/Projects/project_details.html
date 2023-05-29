@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% load tz %}
+{% load humanize %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'Projects/table.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'Projects/table-expandable.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'Projects/pagination.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'Projects/project_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<body>
+  <div class="project-info-containers">
+
+  <div class="project-info-tbl">
+  <table class="my-table">
+    <caption>PROJEKTO INFORMACIJA</caption>
+    <thead>
+      <tr>
+      <th>Projektas</th>
+      <th>Klientas</th>
+      <th>Adresas</th>
+      <th>Tel. nr.</th>
+      <th>Miestas</th>
+      <th>El. paštas</th>
+      <th>Konstrukcija</th>
+      <th>KW</th>
+      <th>Moduliai, W</th>
+      <th>Projekto būsena</th>
+      <th>Subrangos montuotojai</th>
+      <th>EUR/KW</th>
+      <th>Komentaras</th>
+      <th>Pridėjimo data</th>
+      <th>Veiksmas</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in projects %}
+      <tr>
+        <td>{{ project.project_name }}</td>
+        <td>
+          <a href="{% url 'projects:customers-update' project.customer_id.pk %}" class="project-detail-menu">
+            {{ project.customer_id.name }} {{ project.customer_id.surname }}
+        </a>
+        </td>
+        <td>{{ project.address|default:'' }}</td>
+      <td>{{ project.customer_id.mobile_number|default:'' }}</td>
+      <td>{{ project.city|default:'' }}</td>
+      <td>{{ project.customer_id.email|default:'' }}</td>
+      <td>{{ project.construction_id.name|default:'' }}</td>
+      <td>{{ project.kw|default:0 }}</td>
+      <td>{{ project.modules_w|default:0 }}</td>
+      <td>
+        <span class="badge {{ badge_color }}">{{ project.status_id }}</span>
+      </td>
+      <td>{{ project.subcontracting|default:'' }}</td>
+      <td>{{ project.eur_kw|default:0 }}</td>
+      <td>{{ project.comment|default:'' }}</td>
+      <td>{{ project.create_date|date:"Y-m-d" }}</td>
+        <td>
+          <a href="{% url 'projects:projects-update' project.project_id %}" class="btn btn-edit">Redaguoti</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+  <div class="project-jobs-tbl">
+    <table class="my-table">
+      <caption>PROJEKTO DARBAI</caption>
+      <thead>
+        <tr>
+          <th>Darbo pavadinimas</th>
+          <th>Pradžios data</th>
+          <th>Pabaigos data</th>
+          <th>Darbo laikas, val.</th>
+          <th>Pertrauka, val.</th>
+          <th>Grynas darbas, val.</th>
+          <th>Atliktas</th>
+          <th>Veiksmas</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+        <tr>
+          <td>{{ job.title }}</td>
+          <td>{{ job.start_date|date:"Y-m-d" }}</td>
+          <td>{{ job.end_date|date:"Y-m-d" }}</td>
+          <td>{{ job.work_time|default:'' }}</td>
+          <td>{{ job.break_time|default:'' }}</td>
+          <td>{{ job.neto_time|default:'' }}</td>
+          <td>
+            {% if job.isDone == 'taip' %}
+              <span class="badge success">Taip</span>
+            {% else %}
+              <span class="badge waiting">Ne</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{% url 'projects:jobs-delete' job.id %}" class="btn btn-delete">Ištrinti</a>
+            <a href="{% url 'projects:jobs-update' job.id %}" class="btn btn-edit">Redaguoti</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="project-invoices-expenditures-tbl">
+    <div class="project-invoices-tbl">
+      <table class="my-table-expandable">
+        <caption>PROJEKTO SĄSKAITOS</caption>
+        <thead>
+          <tr>
+            <th>Sąskaitos nr.</th>
+            <th>Pridėjimo data</th>
+            <th>Termino data</th>
+            <th>Dienos</th>
+            <th>Suma, eur</th>
+            <th>Apmokėta, eur</th>
+            <th>Būsena</th>
+            <th>Veiksmas</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for invoice in invoices %}
+          <tr class="expandable-row">
+            <td>{{ invoice.invoice_no }}</td>
+            <td>{{ invoice.operation_date|date:"Y-m-d" }}</td>
+            <td>{{ invoice.deadline_date|date:"Y-m-d" }}</td>
+            <td>{{ invoice.term_days|default:'' }}</td>
+            <td>{{ invoice.amount|default:0 }} €</td>
+            <td>{{ invoice.total_paid|default:0 }} €</td>
+            <td>
+                {% if invoice.status == 'Apmokėta' %}
+                  <span class="badge success">Apmokėta</span>
+                {% elif invoice.status == 'Dalinai apmokėta' %}
+                  <span class="badge partly-success">Dalinai apmokėta</span>
+                  {% else %}
+                  <span class="badge waiting">Neapmokėta</span>
+                {% endif %}
+              </td>
+            <td>
+              <a href="{% url 'projects:invoicePayments-create' invoice.invoice_no %}" class="btn btn-add">Pridėti mokėjimą</a>
+              <a href="{% url 'projects:invoices-delete' invoice.invoice_no %}" class="btn btn-delete">Ištrinti</a>
+              <a href="{% url 'projects:invoices-update' invoice.invoice_no %}" class="btn btn-edit">Redaguoti</a>
+            </td>
+          </tr>
+          <tr class="expanded-content">
+            <td colspan="9">
+            <div class="expanded-content-wrapper">
+              <div class="expanded-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Apmokėjimo data</th>
+                      <th>Apmokėta suma, eur</th>
+                      <th>Veiksmas</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for payment in invoice.invoice_payments.all %}
+                    <tr>
+                      <td>{{ payment.payment_date|date:"Y-m-d" }}</td>
+                      <td>{{ payment.paid_amount }} €</td>
+                      <td>
+                        <a href="{% url 'projects:invoicePayments-delete' payment.id %}" class="btn btn-delete">Ištrinti</a>
+                        <a href="{% url 'projects:invoicePayments-update' payment.id %}" class="btn btn-edit">Redaguoti</a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="project-expenditures-tbl">
+      <table class="my-table">
+        <caption>PROJEKTO IŠLAIDOS</caption>
+        <thead>
+          <tr>
+              <th>Pridėjimo data</th>
+              <th>Išlaidos pavadinimas</th>
+              <th>Kiekis</th>
+              <th>Kaina</th>
+              <th>Suma, eur</th>
+              <th>Veiksmas</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for expenditure in expenditures %}
+          <tr>
+          <td>{{ expenditure.operation_date|date:"Y-m-d" }}</td>
+          <td>{{ expenditure.name|default:'' }}</td>
+          <td>{{ expenditure.quantity|default:'' }}</td>
+          <td>{{ expenditure.price }} €</td>
+          <td>{{ expenditure.amount }} €</td>
+            <td>
+              <a href="{% url 'projects:expenditures-delete' expenditure.id %}" class="btn btn-delete">Ištrinti</a>
+              <a href="{% url 'projects:expenditures-update' expenditure.id %}" class="btn btn-edit">Redaguoti</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% block body %}
+    <script src="{% static 'Projects/js.js' %}"></script>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'Projects/base.html' %}
+{% load static %}
+{% load tz %}
+{% load humanize %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'Projects/style.css' %}">
+    <title>Document</title>
+</head>
+
+  {% block content %}
+  <div class="table-container">
+    <div class="flex justify-right">
+      <button type="button" class="text-white bg-[#4e26dc] hover:bg-[#4e26dc]/90 focus:ring-4 focus:outline-none focus:ring-[#4e26dc]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4e26dc]/55 mr-2 mb-2">
+        <svg class="w-4 h-4 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+        </svg>
+        Add New Payment
+      </button>
+    </div>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" style="border-collapse: collapse; table-layout: fixed;">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                  <th scope="col" class="px-6 py-3 text-left">
+                      Invoice number
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-center">
+                      Project Name
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-center">
+                      Payment date
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-center">
+                      Amount paid
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-center">
+                    Action
+                </th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for invoice in invoices %}
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-left">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ invoice.invoice_no.invoice_no }}</a>
+                  </th>
+                  <td class="px-6 py-4 text-center">
+                    {{ invoice.invoice_no.project_id.project_name }}
+                  </td>
+                  <td class="px-6 py-4 text-center">
+                    {{ invoice.payment_date|date:"Y-m-d" }}
+                  </td>
+                  <td class="px-6 py-4 text-center">
+                    {{ invoice.paid_amount }} €
+                  </td>
+                  <td class="px-6 py-4 text-center">
+                    <a href="{% url 'projects:invoicePayments-delete' invoice.id %}" class="action-button remove-button">Remove</a>
+                    <a href="#" class="action-button edit-button">Edit</a>
+                </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  </div>
+  {% endblock %}
+</html>

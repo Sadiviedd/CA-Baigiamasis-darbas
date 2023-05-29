@@ -1,0 +1,80 @@
+.table-container-expandable {
+    margin: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+
+  .my-table-expandable {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .my-table-expandable th,
+  .my-table-expandable td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .my-table-expandable th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+    text-transform: uppercase;
+  }
+  
+  .my-table-expandable tr {
+    line-height: 30px;
+  }
+  
+  .my-table-expandable .expandable-row:hover {
+    background-color: #f5f5f5;
+  }
+
+  .expanded-content-wrapper {
+    width: 50%;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .expanded-content {
+    display: none;
+  }
+  
+  .expanded-table {
+    margin: 2px;
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .expanded-table table {
+    width:100%;
+    border-collapse: collapse;
+  }
+  
+  .expanded-table th,
+  .expanded-table td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    border-color: #eeeeee;
+  }
+  
+  .expanded-table th {
+    background-color: #5F9EA0;
+    font-size: 12px;
+    color: #fff;
+    font-weight: 200;
+  }
+  
+  .expanded-table thead,
+  .expanded-table tr {
+    line-height: 15px;
+  }
+
+.expanded-table tr:hover {
+    background-color: #f9f9f9;
+  }
