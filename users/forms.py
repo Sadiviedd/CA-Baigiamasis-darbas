@@ -8,54 +8,54 @@ class RegisterForm(UserCreationForm):
     username = forms.CharField(
         label='Prisijungimo vardas',
         max_length=50,
-        error_messages={'required': 'Laukas yra privalomas',
-                        'invalid': 'Įveskite tinkamą vartotojo vardą. Naudokite raides arba skaičius.',
-                        'unique': 'Toks vartotojo vardas yra užimtas. Pasirinkite kitą.'}
+        error_messages={
+            'required': 'Laukas yra privalomas',
+            'invalid': 'Įveskite tinkamą vartotojo vardą. Naudokite raides arba skaičius.',
+            'unique': 'Toks vartotojo vardas yra užimtas. Pasirinkite kitą.'
+        }
     )
     email = forms.EmailField(
         label='El. paštas',
         max_length=50,
-        error_messages={'required': 'Laukas yra privalomas',
-                        'invalid': 'El. paštas nėra tinkamas',
-                        'unique': 'Toks el. paštas yra užimtas. Pasirinkite kitą'}
+        error_messages={
+            'required': 'Laukas yra privalomas',
+            'invalid': 'El. paštas nėra tinkamas',
+            'unique': 'Toks el. paštas yra užimtas. Pasirinkite kitą.'
+        }
     )
     password1 = forms.CharField(
         label='Slaptažodis', 
-        widget=PasswordInput(render_value=True),
+        widget=forms.PasswordInput(render_value=True),
         max_length=50,
-        error_messages={'required': 'Laukas yra privalomas',
-                        'unique': 'Toks slaptažodis yra užimtas. Pasirinkite kitą'}
+        error_messages={
+            'required': 'Laukas yra privalomas',
+        }
     )
     password2 = forms.CharField(
         label='Pakartokite slaptažodį', 
-        widget=PasswordInput(render_value=True),
+        widget=forms.PasswordInput(render_value=True),
         max_length=50,
-        error_messages={'required': 'Laukas yra privalomas',
-                        'unique': ''}
+        error_messages={
+            'required': 'Laukas yra privalomas',
+        }
     )
 
-    def clean_password1(self):
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError('Toks vartotojo vardas jau egzistuoja. Pasirinkite kitą.')
+        return username
 
-        if len(password1) < 8:
-            raise forms.ValidationError("Slaptažodis yra per trumpas. Turi sudaryti mažiausiai 8 simboliai.")
-        elif password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Slaptažodžiai nesutampa.")
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
 
-        return password1
-    
-    def clean_password2(self):
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError('Slaptažodžiai nesutampa.')
 
-        if len(password2) < 8:
-            raise forms.ValidationError("Slaptažodis yra per trumpas. Turi sudaryti mažiausiai 8 simboliai.")
-        elif password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Slaptažodžiai nesutampa.")
+        return cleaned_data
 
-        return password2
-    
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
